@@ -1,14 +1,16 @@
-{ config, pkgs, username, email, ... }:
+{ config, pkgs, username, ... }:
 
 {
   home.username = "${username}";
   home.homeDirectory = "/home/${username}";
 
   # Packages that should be installed to the user profile.
-  home.packages = [
-    pkgs.cowsay
-    pkgs.discord
-    pkgs.alacritty
+  home.packages = with pkgs; [
+    cowsay
+    discord
+    gh
+    alacritty
+    calibre 
   ];
 
   programs.neovim = {
@@ -22,6 +24,7 @@
   };
 
   programs.git = {
+    enable = true;
     userName = "AJ Smyth";
     userEmail = "alexander.j.smyth@gmail.com";
   };
