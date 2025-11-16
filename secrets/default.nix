@@ -2,9 +2,6 @@
 { config, pkgs, agenix, ... }:
 
 {
-  imports = [
-    agenix.nixosModules.default
-  ];
   # if you changed this key, you need to regenerate all encrypt files from the decrypt contents!
   age.identityPaths = [
     # using the host key for decryption
