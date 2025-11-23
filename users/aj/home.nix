@@ -11,6 +11,7 @@
     gh
     alacritty
     calibre 
+    firefox
   ];
 
   programs.neovim = {

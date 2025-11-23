@@ -11,11 +11,11 @@
     ];
 
   # Bootloader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda";
+  boot.loader.grub.enable = false;
+  boot.loader.grub.device = "/dev/nvme0n1";
   boot.loader.grub.useOSProber = true;
 
-  networking.hostName = "lemurian"; # Define your hostname.
+  networking.hostName = "acrid"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -88,6 +88,9 @@
     #  thunderbird
     ];
   };
+
+  # Install firefox.
+  programs.firefox.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;

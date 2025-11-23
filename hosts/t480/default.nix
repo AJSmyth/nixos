@@ -11,11 +11,10 @@
     ];
 
   # Bootloader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda";
-  boot.loader.grub.useOSProber = true;
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "lemurian"; # Define your hostname.
+  networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -43,13 +42,13 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  # You can disable this if you're only using the Wayland session.
-  services.xserver.enable = true;
-
   # Enable the KDE Plasma Desktop Environment.
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
+
+  # Enable the X11 windowing system.
+  # You can disable this if you're only using the Wayland session.
+  services.xserver.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -76,16 +75,12 @@
     #media-session.enable = true;
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${username} = {
     isNormalUser = true;
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       kdePackages.kate
-    #  thunderbird
     ];
   };
 
@@ -95,10 +90,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget
+    vim 
     git
-    usbutils
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -128,26 +121,4 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.05"; # Did you read the comment?
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = true;
-    settings = {
-      General = {
-        # Shows battery charge of connected devices on supported
-        # Bluetooth adapters. Defaults to 'false'.
-        Experimental = true;
-        # When enabled other devices can connect faster to us, however
-        # the tradeoff is increased power consumption. Defaults to
-        # 'false'.
-        FastConnectable = true;
-      };
-      Policy = {
-        # Enable all controllers when they are found. This includes
-        # adapters present on start as well as adapters that are plugged
-        # in later on. Defaults to 'true'.
-        AutoEnable = true;
-      };
-    };
-  };
 }
