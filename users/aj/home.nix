@@ -1,8 +1,12 @@
-{ config, pkgs, username, ... }:
+{ config, pkgs, username, firefox-addons, ... }:
 
 {
   home.username = "${username}";
   home.homeDirectory = "/home/${username}";
+
+  imports = [
+    ../../home/firefox.nix
+  ];
 
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [

@@ -9,9 +9,13 @@
     };
     agenix.url = "github:ryantm/agenix";
     mysecrets = { url = "git+ssh://git@github.com/AJSmyth/nix-secrets"; flake = false; };
+    firefox-addons = { 
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons"; 
+      inputs.nixpkgs.follows = "nixpkgs"; 
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, agenix, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, agenix, firefox-addons, ... }@inputs: {
     nixosConfigurations = {
       # T480 - Acrid
       t480 = let
@@ -31,8 +35,8 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
 
-            home-manager.extraSpecialArgs = {inherit username;};
-            home-manager.users.${username} = import ./users/${username}/home.nix;
+            home-manager.extraSpecialArgs = {inherit username; inherit firefox-addons; };
+            home-manager.users.${username}.imports = [ ./users/${username}/home.nix ];
           }
         ];
       };
